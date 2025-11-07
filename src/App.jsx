@@ -1,16 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Footer from './components/Footer';
 
 function App() {
   const [user, setUser] = useState(null);
-  const loginRef = useRef(null);
 
   const handleLoginSuccess = (payload) => {
     setUser(payload);
-    // Smooth scroll to dashboard after login
     const el = document.getElementById('dashboard');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -31,9 +30,10 @@ function App() {
       <Navbar isAuthed={!!user} onLogout={handleLogout} onScrollToLogin={handleScrollToLogin} />
       <main>
         <Hero />
-        {!user && <Login onSuccess={handleLoginSuccess} ref={loginRef} />}
+        {!user && <Login onSuccess={handleLoginSuccess} />}
         <Dashboard user={user} />
       </main>
+      <Footer />
     </div>
   );
 }
